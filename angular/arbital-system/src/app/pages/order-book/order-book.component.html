@@ -1,0 +1,46 @@
+<h2 class="content-block">OrderBook Information</h2>
+<div class="dx-fieldset">
+  <div class="row">
+    <div class="col-2">
+      <div class="dx-field">
+        <div class="dx-field-label">
+          Status
+          <dx-select-box [items]="statusData" [(value)]="status" displayExpr="name" showClearButton="true"
+          valueExpr="id"></dx-select-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="dx-field">
+        <div class="dx-field-label">
+          ExceptStatus
+          <dx-select-box [items]="statusData" [(value)]="exceptStatus" displayExpr="name" showClearButton="true"
+          valueExpr="id"></dx-select-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-7">
+
+    </div>
+    <div class="col-1">
+      <dx-button stylingMode="contained" text="Search" type="normal" [width]="120" (onClick)="gridRefresh()">
+      </dx-button>
+    </div>
+  </div>
+</div>
+<dx-data-grid #dataGridVar id="gridContainer" [dataSource]="gridDataSource" [showBorders]="true" [customizeColumns]="customizeColumns"
+  [remoteOperations]="true">
+  <dxo-header-filter [visible]="false"></dxo-header-filter>
+  <dxo-sorting mode="none"></dxo-sorting>
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager
+      [showPageSizeSelector]="true"
+      [allowedPageSizes]="[10, 25, 50, 100]"
+  ></dxo-pager>
+
+  <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+  <div *dxTemplate="let dt of 'detail'">
+    <div class="master-detail-caption">Detail</div>
+    <order-book-detail-grid [data]="dt.data.exchangeInfos"></order-book-detail-grid>
+  </div>
+</dx-data-grid>

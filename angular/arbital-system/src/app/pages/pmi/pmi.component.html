@@ -1,0 +1,60 @@
+<h2 class="content-block">Pair Information</h2>
+<div class="dx-fieldset">
+
+  <div class="row">
+    <div class="col-2">
+      <div class="dx-field">
+        <div class="dx-field-label">
+          BaseCurrency
+          <dx-text-box [(value)]="baseCurrency"></dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="dx-field">
+        <div class="dx-field-label">
+          QuoteCurrency
+          <dx-text-box [(value)]="quoteCurrency"></dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="dx-field">
+        <div class="dx-field-label">
+          OccurencesCount
+          <dx-text-box [(value)]="occurencesCount"></dx-text-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="dx-field">
+        <div class="dx-field-label">
+          Exchange
+          <dx-select-box [items]="exchangeData" [(value)]="exchange" displayExpr="name" showClearButton="true"
+            valueExpr="id"></dx-select-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+
+    </div>
+    <div class="col-1">
+      <dx-button stylingMode="contained" text="Search" type="normal" [width]="120" (onClick)="gridRefresh()">
+      </dx-button>
+    </div>
+  </div>
+</div>
+
+<dx-data-grid #dataGridVar id="gridContainer" [dataSource]="gridDataSource" [showBorders]="true"
+  [remoteOperations]="true">
+  <dxo-header-filter [visible]="false"></dxo-header-filter>
+  <dxo-sorting mode="none"></dxo-sorting>
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
+
+  <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+  <div *dxTemplate="let dt of 'detail'">
+    <div class="master-detail-caption">Detail</div>
+    <pmi-detail-grid [key]="dt.key"></pmi-detail-grid>
+  </div>
+</dx-data-grid>

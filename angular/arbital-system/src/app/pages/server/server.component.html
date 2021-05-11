@@ -1,0 +1,43 @@
+<h2 class="content-block">Server Information</h2>
+<div class="dx-fieldset">
+
+  <div class="row">
+    <div class="col-2">
+      <div class="dx-field">
+        <div class="dx-field-label">
+          <dx-select-box [items]="typeData" [(value)]="typeServer" displayExpr="name" valueExpr="id" placeholder="Type"
+            showClearButton="true"></dx-select-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-2">
+      <div class="dx-field">
+        <div class="dx-field-label checkboxCustom">
+          IsDeleted:
+          <dx-check-box [(value)]="isDeleted"></dx-check-box>
+        </div>
+      </div>
+    </div>
+    <div class="col-7">
+
+    </div>
+    <div class="col-1">
+      <dx-button stylingMode="contained" text="Search" type="normal" [width]="120" (onClick)="gridRefresh()">
+      </dx-button>
+    </div>
+  </div>
+</div>
+
+<dx-data-grid #dataGridVar id="gridContainer" [dataSource]="gridDataSource" [showBorders]="true"
+  [remoteOperations]="true">
+  <dxo-header-filter [visible]="false"></dxo-header-filter>
+  <dxo-sorting mode="none"></dxo-sorting>
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
+
+  <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+  <div *dxTemplate="let dt of 'detail'">
+    <div class="master-detail-caption">Detail</div>
+    <server-detail-grid [key]="dt.key"></server-detail-grid>
+  </div>
+</dx-data-grid>
